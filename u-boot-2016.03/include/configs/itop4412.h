@@ -104,9 +104,11 @@
 #define CONFIG_ENV_IS_IN_MMC
 #define CONFIG_SYS_MMC_ENV_DEV		0
 #define CONFIG_ENV_SIZE			(16 << 10)	/* 16 KB */
-#define RESERVE_BLOCK_SIZE		(512)
-#define BL1_SIZE			(16 << 10) /*16 K reserved for BL1*/
-#define CONFIG_ENV_OFFSET		(RESERVE_BLOCK_SIZE + BL1_SIZE)
+/* #define RESERVE_BLOCK_SIZE		(512) */
+#define BL1_SIZE			(8 << 10)  /* 8 K reserved for BL1 */
+#define BL2_SIZE			(16 << 10) /*16 K reserved for BL2*/
+#define U_BOOT_SIZE			(472 << 10)/* 472 K reserved for U-BOOT */
+#define CONFIG_ENV_OFFSET		(BL1_SIZE + BL2_SIZE + U_BOOT_SIZE) /* BL1 + BL2 + U-BOOT + ENV = 512K */
 
 #if 0
 #define CONFIG_SPL_LDSCRIPT	"board/samsung/common/exynos-uboot-spl.lds"
@@ -116,8 +118,12 @@
 #define CONFIG_SYS_INIT_SP_ADDR		0x02040000
 
 /* U-Boot copy size from boot Media to DRAM.*/
+#if 0
 #define COPY_BL2_SIZE		0x80000
 #define BL2_START_OFFSET	((CONFIG_ENV_OFFSET + CONFIG_ENV_SIZE)/512)
 #define BL2_SIZE_BLOC_COUNT	(COPY_BL2_SIZE/512)
+#else
+#define CONFIG_SUPPORT_EMMC_BOOT
+#endif
 
 #endif	/* __CONFIG_H */

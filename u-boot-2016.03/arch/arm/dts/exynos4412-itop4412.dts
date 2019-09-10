@@ -20,9 +20,14 @@
 	};
 */
 	aliases {
-		serial0 = "/serial@13800000";
+//		serial0 = "/serial@13800000";
 		console = "/serial@13820000";
 		mmc2 = "sdhci@12530000";
+		mmc4 = "dwmmc@12550000";
+	};
+	
+	serial@13820000 {
+		status = "okay";
 	};
 
 	sdhci@12510000 {
@@ -35,11 +40,22 @@
 
 	sdhci@12530000 {
 		samsung,bus-width = <4>;
-		samsung,timing = <1 2 3>;
-		cd-gpios = <&gpk2 2 0>;
+		samsung,timing = <0 0 0>;
+		cd-gpios = <&gpx0 7 0>;
+		pwr-gpios = <&gpk0 2 0>;
 	};
 
 	sdhci@12540000 {
 		status = "disabled";
+	};
+
+	dwmmc@12550000 {
+		samsung,bus-width = <8>;
+		samsung,timing = <2 1 0>;
+		samsung,removable = <0>;
+		fifoth_val = <0x203f0040>;
+		bus_hz = <400000000>;
+		div = <0x3>;
+		index = <4>;
 	};
 };
