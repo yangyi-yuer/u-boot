@@ -220,11 +220,13 @@ static int ehci_usb_probe(struct udevice *dev)
 	ctx->hcd = (struct ehci_hccr *)plat->hcd_base;
 	ctx->usb = (struct exynos_usb_phy *)plat->phy_base;
 
+	/* printf("%s[%d]\n",__func__,__LINE__); */
 	/* setup the Vbus gpio here */
 	if (dm_gpio_is_valid(&plat->vbus_gpio))
 		dm_gpio_set_value(&plat->vbus_gpio, 1);
 
 	setup_usb_phy(ctx->usb);
+	mdelay(1);
 	hcor = (struct ehci_hcor *)((uint32_t)ctx->hcd +
 			HC_LENGTH(ehci_readl(&ctx->hcd->cr_capbase)));
 

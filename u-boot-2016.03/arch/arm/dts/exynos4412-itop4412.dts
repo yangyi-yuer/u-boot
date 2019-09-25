@@ -9,16 +9,17 @@
 
 /dts-v1/;
 #include "skeleton.dtsi"
-#include "exynos4210.dtsi"
+#include "exynos4412.dtsi"
+#include <dt-bindings/gpio/gpio.h>
 
 / {
 	model = "iTop4412 board based on Exynos4412";
 	compatible = "samsung,itop4412", "samsung,exynos4412";
-/*
+
 	chosen {
-		bootargs ="";
+		bootargs ="root=/dev/nfs nfsroot=192.168.1.11:/home/yang/workspace/nfs/rootfs rw clk_ignore_unused console=ttySAC2,115200 init=/linuxrc  ip=192.168.1.22";
 	};
-*/
+
 	aliases {
 //		serial0 = "/serial@13800000";
 		console = "/serial@13820000";
@@ -58,4 +59,21 @@
 		div = <0x3>;
 		index = <4>;
 	};
+
+	ehci@12580000 {
+		compatible = "samsung,exynos-ehci";
+		reg = <0x12580000 0x100>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+		phy {
+			compatible = "samsung,exynos-usb-phy";
+			reg = <0x125B0000 0x100>;
+		};
+	};
+	
+	usb-phy-reset {
+		compatible = "smsc,usb-phy-reset";
+		reset-gpio = <&gpm2 4 GPIO_ACTIVE_LOW>;
+	};
+
 };

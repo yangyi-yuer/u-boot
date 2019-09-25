@@ -17,6 +17,39 @@
 
 #define CONFIG_SYS_DCACHE_OFF		1
 
+#if 0
+#define DEBUG
+#endif
+/* USB ETHERNET */
+#define CONFIG_CMD_USB
+#define CONFIG_USB_HOST
+
+#define CONFIG_USB_EHCI
+#define CONFIG_USB_EHCI_HCD
+#define CONFIG_USB_EHCI_EXYNOS
+#define CONFIG_SYS_USB_EHCI_MAX_ROOT_PORTS	3
+
+#if 1
+#define CONFIG_USB_HOST_ETHER
+#define CONFIG_USB_ETHER_DM9621
+
+#define CONFIG_IPADDR                  192.168.1.22
+#define CONFIG_SERVERIP                192.168.1.11
+#define CONFIG_GATEWAYIP               192.168.1.1
+#define CONFIG_NETMASK                 255.255.255.0
+#endif
+
+/*#define CONFIG_USB_EHCI_TXFIFO_THRESH 0x10*/
+#define CONFIG_SYS_STDIO_DEREGISTER 1
+
+#undef CONFIG_BOOTDELAY
+#define CONFIG_BOOTDELAY     3
+
+#if 0
+#define CONFIG_BOOTARGS "root=/dev/nfs nfsroot=192.168.1.11:/home/yang/workspace/nfs/rootfs rw clk_ignore_unused console=ttySAC2,115200 init=/linuxrc  ip=192.168.1.22\0"
+#define CONFIG_BOOTCOMMAND "tftpboot 41000000 uImage; tftpboot 42000000 exynos4412-itop4412.dtb; bootm 41000000 - 42000000\0"
+#endif
+
 /* ORIGEN has 4 bank of DRAM */
 #define CONFIG_NR_DRAM_BANKS		4
 #define CONFIG_SYS_SDRAM_BASE		0x40000000
@@ -39,7 +72,7 @@
 /* Console configuration */
 #define CONFIG_SYS_CONSOLE_INFO_QUIET
 #define CONFIG_SYS_CONSOLE_IS_IN_ENV
-#define CONFIG_DEFAULT_CONSOLE		"console=ttySAC1,115200n8\0"
+#define CONFIG_DEFAULT_CONSOLE		"console=ttySAC2,115200n8\0"
 
 #define CONFIG_SYS_MEM_TOP_HIDE	(1 << 20)	/* ram console */
 
@@ -50,7 +83,7 @@
 #define S5P_CHECK_DIDLE			0xBAD00000
 #define S5P_CHECK_LPA			0xABAD0000
 
-#undef CONFIG_CMD_PING
+/*#undef CONFIG_CMD_PING*/
 #define CONFIG_CMD_DHCP
 #define CONFIG_CMD_EXT2
 #define CONFIG_CMD_FS_GENERIC
