@@ -37,7 +37,7 @@ dep:
 
 #---------------------------------------------------------------------------------------
 clean:
-		$(RM) -rf chksum
+		$(RM) -rf chksum add_sign add_padding
 
 new:
 		$(MAKE)		clean
