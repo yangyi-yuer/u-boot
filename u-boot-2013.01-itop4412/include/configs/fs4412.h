@@ -155,8 +155,24 @@
 /* Enable devicetree support */
 #define CONFIG_OF_LIBFDT
 
+/* USB */
+/*#define CONFIG_CMD_USB*/
 
 #ifdef CONFIG_CMD_NET
+#ifdef CONFIG_CMD_USB
+/* USB UHH support options */
+#define CONFIG_OF_CONTROL
+#define CONFIG_USB_HOST
+#define CONFIG_USB_EHCI
+#define CONFIG_USB_EHCI_HCD
+#define CONFIG_USB_EHCI_EXYNOS
+#define CONFIG_SYS_USB_EHCI_MAX_ROOT_PORTS 3
+
+/* USB Networking options */
+#define CONFIG_USB_HOST_ETHER
+#define CONFIG_USB_ETHER_DM9621
+
+#else
 #define CONFIG_NET_MULTI
 #define CONFIG_DRIVER_DM9000   			1
 #define CONFIG_DM9000_BASE     			0x05000000
@@ -165,9 +181,11 @@
 #define CONFIG_DM9000_USE_16BIT
 #define CONFIG_DM9000_NO_SROM  			1
 #define CONFIG_ETHADDR 					11:22:33:44:55:66
-#define CONFIG_IPADDR  					192.168.9.200
-#define CONFIG_SERVERIP     			192.168.9.120
-#define CONFIG_GATEWAYIP       			192.168.9.1
+#endif
+
+#define CONFIG_IPADDR  					192.168.1.11
+#define CONFIG_SERVERIP     			192.168.1.22
+#define CONFIG_GATEWAYIP       			192.168.1.1
 #define CONFIG_NETMASK 					255.255.255.0
 #endif
 

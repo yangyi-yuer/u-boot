@@ -124,9 +124,29 @@ static void usb_hub_power_on(struct usb_hub_device *hub)
 	mdelay(max(pgood_delay, (unsigned)100));
 }
 
+#include <asm/gpio.h>
+#include <asm/arch-exynos/gpio.h>
 void usb_hub_reset(void)
 {
 	usb_hub_index = 0;
+
+#if 1
+	gpio_request(exynos4x12_gpio_part2_get_nr(m3,3), "usb_connect");
+	gpio_request(exynos4x12_gpio_part2_get_nr(m2,4), "usb_reset");
+
+	gpio_direction_output(exynos4x12_gpio_part2_get_nr(m3,3), 0);
+	gpio_direction_output(exynos4x12_gpio_part2_get_nr(m2,4), 0);
+	mdelay(100);
+	gpio_direction_output(exynos4x12_gpio_part2_get_nr(m2,4), 1);
+	gpio_direction_output(exynos4x12_gpio_part2_get_nr(m3,3), 1);
+
+
+	gpio_request(exynos4x12_gpio_part1_get_nr(c0,1), "dm9621_reset");
+	gpio_direction_output(exynos4x12_gpio_part1_get_nr(c0,1), 0);
+	udelay(7000);
+	gpio_direction_output(exynos4x12_gpio_part1_get_nr(c0,1), 1);
+
+#endif
 }
 
 static struct usb_hub_device *usb_hub_allocate(void)
